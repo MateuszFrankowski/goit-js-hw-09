@@ -2,6 +2,7 @@
 import flatpickr from 'flatpickr';
 // Dodatkowy import stylów
 import 'flatpickr/dist/flatpickr.min.css';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
@@ -17,7 +18,7 @@ function convertMs(ms) {
   const minutes = Math.floor(((ms % day) % hour) / minute);
   // Remaining seconds
   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
-  console.log(days, hours, minutes, seconds);
+
   return { days, hours, minutes, seconds };
 }
 const addLeadingZero = value => {
@@ -30,13 +31,13 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
     const actualDateChose = new Date();
     if (selectedDates[0].getTime() <= actualDateChose.getTime())
-      return alert('wybierz date z przyszlosci');
+      return Notify.failure('wybierz date z przyszlosci');
     btnStart.disabled = false;
   },
 };
+let timerId = null;
 const calendars = flatpickr('#datetime-picker', options);
 const btnStart = document.querySelector('button[data-start]');
 const days = document.querySelector('.value[data-days]');
@@ -47,6 +48,7 @@ const countdownTimer = finishDate => {
   let actualDate = new Date();
   let finishTime = finishDate.getTime();
   let timeDifference = finishTime - actualDate;
+  if (timeDifference <= 0) return clearInterval(timerId);
   const timeLeft = convertMs(timeDifference);
   days.textContent = addLeadingZero(timeLeft.days);
   hours.textContent = addLeadingZero(timeLeft.hours);
@@ -56,7 +58,7 @@ const countdownTimer = finishDate => {
 const catchTheTime = () => {
   btnStart.disabled = true;
   const finishDate = calendars.selectedDates[0];
-  const timerId = setInterval(countdownTimer, 1000, finishDate);
+  timerId = setInterval(countdownTimer, 1000, finishDate);
 };
 btnStart.addEventListener('click', catchTheTime);
 btnStart.disabled = true;
