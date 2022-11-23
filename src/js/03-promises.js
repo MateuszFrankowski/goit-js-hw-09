@@ -1,6 +1,5 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-// Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
-// Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+
 const form = document.querySelector('form');
 const delayTime = document.querySelector('input[name="delay"]');
 const step = document.querySelector('input[name="step"]');
