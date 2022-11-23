@@ -22,8 +22,9 @@ const createPromises = event => {
   let delay = delayTime.value;
   const delayStep = step.value;
   const promisesAmount = amount.value;
+
   for (let i = 0; i < promisesAmount; i++) {
-    position = i + 1;
+    let position = i + 1;
     createPromise(position, delay)
       .then(value => {
         Notify.success(value);
