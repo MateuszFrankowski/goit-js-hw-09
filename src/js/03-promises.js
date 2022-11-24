@@ -21,9 +21,8 @@ const createPromise = (position, delay) => {
 
 const createPromises = event => {
   event.preventDefault();
-  let delayString = delayTime.value;
-  let delay = parseInt(delayString);
-  const delayStep = step.value;
+  let delay = parseInt(delayTime.value);
+  const delayStep = parseInt(step.value);
   const promisesAmount = amount.value;
 
   let position = 1;
@@ -36,9 +35,9 @@ const createPromises = event => {
         Notify.failure(error);
       })
       .finally(() => {
-        console.log(position, delay);
-        return position <= promisesAmount
-          ? x(delayStep)
+        delay = delay + delayStep;
+        return position < promisesAmount
+          ? promisesHandler(delay)
           : console.log('finish');
       });
   promisesHandler(delay);
