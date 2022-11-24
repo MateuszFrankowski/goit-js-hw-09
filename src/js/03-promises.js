@@ -27,7 +27,7 @@ const createPromises = event => {
   const promisesAmount = amount.value;
 
   let position = 1;
-  const x = delay =>
+  const promisesHandler = delay =>
     createPromise(position++, delay)
       .then(value => {
         Notify.success(value);
@@ -41,7 +41,7 @@ const createPromises = event => {
           ? x(delayStep)
           : console.log('finish');
       });
-  x(delay);
+  promisesHandler(delay);
 };
 
 form.addEventListener('submit', createPromises);
