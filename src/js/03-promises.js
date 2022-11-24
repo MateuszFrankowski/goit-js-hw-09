@@ -15,7 +15,7 @@ const createPromise = (position, delay) => {
         console.log('reject', position, delay);
         reject(`❌ Rejected promise ${position} in ${delay}ms`);
       }
-    }, delay);
+    }, delayFromEachOther);
   });
 };
 
@@ -24,7 +24,7 @@ const createPromises = event => {
   let delay = parseInt(delayTime.value);
   const delayStep = parseInt(step.value);
   const promisesAmount = amount.value;
-
+  delayFromEachOther = delay;
   let position = 1;
   const promisesHandler = delay =>
     createPromise(position++, delay)
@@ -36,6 +36,7 @@ const createPromises = event => {
       })
       .finally(() => {
         delay = delay + delayStep;
+        delayFromEachOther = delayStep;
         return position < promisesAmount
           ? promisesHandler(delay)
           : console.log('finish');
