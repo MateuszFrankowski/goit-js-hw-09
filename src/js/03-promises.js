@@ -9,8 +9,10 @@ const createPromise = (position, delay) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (shouldResolve) {
+        console.log('resolve', position, delay);
         resolve(`✅ Fulfilled promise ${position} in ${delay}ms`);
       } else {
+        console.log('reject', position, delay);
         reject(`❌ Rejected promise ${position} in ${delay}ms`);
       }
     }, delay);
@@ -19,20 +21,27 @@ const createPromise = (position, delay) => {
 
 const createPromises = event => {
   event.preventDefault();
-  let delay = delayTime.value;
+  let delayString = delayTime.value;
+  let delay = parseInt(delayString);
   const delayStep = step.value;
   const promisesAmount = amount.value;
 
-  for (let i = 0; i < promisesAmount; i++) {
-    let position = i + 1;
-    createPromise(position, delay)
+  let position = 1;
+  const x = delay =>
+    createPromise(position++, delay)
       .then(value => {
         Notify.success(value);
       })
       .catch(error => {
         Notify.failure(error);
+      })
+      .finally(() => {
+        console.log(position, delay);
+        return position <= promisesAmount
+          ? x(delayStep)
+          : console.log('finish');
       });
-    delay = delay + delayStep;
-  }
+  x(delay);
 };
+
 form.addEventListener('submit', createPromises);
