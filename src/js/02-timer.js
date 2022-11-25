@@ -22,7 +22,7 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 const addLeadingZero = value => {
-  formattedValue = value.toString().padStart(2, '0');
+  const formattedValue = value.toString().padStart(2, '0');
   return formattedValue;
 };
 const options = {
