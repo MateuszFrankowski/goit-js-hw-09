@@ -45,7 +45,7 @@ const hours = document.querySelector('.value[data-hours]');
 const minutes = document.querySelector('.value[data-minutes]');
 const seconds = document.querySelector('.value[data-seconds]');
 const countdownTimer = finishDate => {
-  let actualDate = new Date();
+  const actualDate = new Date();
   let finishTime = finishDate.getTime();
   let timeDifference = finishTime - actualDate;
   if (timeDifference <= 0) return clearInterval(timerId);
@@ -57,6 +57,7 @@ const countdownTimer = finishDate => {
 };
 const catchTheTime = () => {
   btnStart.disabled = true;
+  clearInterval(timerId);
   const finishDate = calendars.selectedDates[0];
   timerId = setInterval(countdownTimer, 1000, finishDate);
 };
