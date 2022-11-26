@@ -37,7 +37,7 @@ const createPromises = event => {
       .finally(() => {
         delay = delay + delayStep;
         delayFromEachOther = delayStep;
-        return position < promisesAmount
+        return position <= promisesAmount
           ? promisesHandler(delay)
           : console.log('finish');
       });
