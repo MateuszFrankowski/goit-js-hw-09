@@ -16,14 +16,14 @@ const createPromise = (position, delay) => {
     }, delayFromEachOther);
   });
 };
-
+let delayFromEachOther;
 const createPromises = event => {
   event.preventDefault();
   btnPromises.disabled = true;
   let delay = parseInt(delayTime.value);
   const delayStep = parseInt(step.value);
   const promisesAmount = amount.value;
-  let delayFromEachOther = delay;
+  delayFromEachOther = delay;
   let position = 1;
   const promisesHandler = delay =>
     createPromise(position++, delay)
