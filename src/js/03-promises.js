@@ -23,7 +23,7 @@ const createPromises = event => {
   let delay = parseInt(delayTime.value);
   const delayStep = parseInt(step.value);
   const promisesAmount = amount.value;
-  const delayFromEachOther = delay;
+  let delayFromEachOther = delay;
   let position = 1;
   const promisesHandler = delay =>
     createPromise(position++, delay)
