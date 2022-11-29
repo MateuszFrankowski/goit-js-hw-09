@@ -7,13 +7,17 @@ const btnStop = document.querySelector('button[data-stop]');
 
 const bodyColorChanger = () => {
   body.style.backgroundColor = getRandomHexColor();
-  btnStart.disabled = true;
-  btnStop.disabled = false;
 };
 let timerId = null;
-const bodyColorfunction = () => (timerId = setInterval(bodyColorChanger, 1000));
+const bodyColorfunction = () => {
+  btnStart.removeEventListener('click', bodyColorfunction, false);
+  btnStart.disabled = true;
+  btnStop.disabled = false;
+  timerId = setInterval(bodyColorChanger, 1000);
+};
 const clearColorFunction = () => {
   clearInterval(timerId);
+  btnStart.addEventListener('click', bodyColorfunction);
   btnStart.disabled = false;
   btnStop.disabled = true;
   console.log(`Interval with id ${timerId} has stopped!`);
