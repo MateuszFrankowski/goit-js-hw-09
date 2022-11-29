@@ -10,14 +10,13 @@ const bodyColorChanger = () => {
 };
 let timerId = null;
 const bodyColorfunction = () => {
-  btnStart.removeEventListener('click', bodyColorfunction, false);
   btnStart.disabled = true;
   btnStop.disabled = false;
   timerId = setInterval(bodyColorChanger, 1000);
 };
 const clearColorFunction = () => {
   clearInterval(timerId);
-  btnStart.addEventListener('click', bodyColorfunction);
+
   btnStart.disabled = false;
   btnStop.disabled = true;
   console.log(`Interval with id ${timerId} has stopped!`);
